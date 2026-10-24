@@ -1,0 +1,374 @@
+@font-face {
+    font-family: "TikTokSans";
+    font-weight: 400;
+    font-style: normal;
+    src: url("../font/TikTokSans-Regular.woff") format("woff");
+}
+
+@font-face {
+    font-family: "Inter";
+    font-weight: 400;
+    font-style: normal;
+    src: url("../font/Inter_18pt-Regular.woff") format("woff");
+}
+
+html {
+
+    line-height: 1.3;
+    scroll-behavior: smooth;
+
+    --mobile-viewport-min: 320;
+    --mobile-desktop-breakpoint: 768;
+    --desktop-viewport-max: 1500;
+
+    --mobile-font-size-min: 16;
+    --mobile-font-size-max: 20;
+    
+    --desktop-font-size-min: 16;
+    --desktop-font-size-max: 20;
+
+    font-size: calc(var(--mobile-font-size-min) * 1px);
+
+    @media screen and (min-width: 320px) {    
+        font-size: calc(var(--mobile-font-size-min) * 1px + (var(--mobile-font-size-max) - var(--mobile-font-size-min)) * ((100vw - var(--mobile-viewport-min) * 1px) / (var(--mobile-desktop-breakpoint) - var(--mobile-viewport-min))));
+    }
+
+    @media screen and (min-width: 768px) {    
+        font-size: calc(var(--desktop-font-size-min) * 1px + (var(--desktop-font-size-max) - var(--desktop-font-size-min)) * ((100vw - var(--mobile-desktop-breakpoint) * 1px) / (var(--desktop-viewport-max) - var(--mobile-desktop-breakpoint))));
+    }
+
+    @media screen and (min-width: 1500px) {    
+        font-size: calc(var(--desktop-font-size-max) * 1px);
+    }
+}
+
+:root {
+    --text-color-rgb: 9, 12, 22;
+    --link-color-rgb: 5, 163, 97;
+    --hover-color-rgb: 248, 162, 199;
+    --background-color-rgb: 255, 255, 255;
+}
+
+body {
+  font-family: "TikTokSans", sans-serif;
+  color: rgba(var(--text-color-rgb), 1);
+  background-color: rgba(var(--background-color-rgb), 1);
+  margin: 0;
+}
+
+.wrapper {
+    box-sizing: border-box;
+    margin: 0 auto;
+    width: 50%;
+    position: relative;
+    z-index: 2;
+
+    @media (max-width: 768px) {
+        width: 100%;
+        padding: 0 1rem;
+    }
+}
+
+h1 {
+    font-family: "TikTokSans", sans-serif;
+    font-weight: normal;
+    font-size: 1em;
+    width: 100%;
+    margin-top: 0;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        width: 100%;
+    }
+}
+
+h2 {
+    font-family: "TikTokSans", sans-serif;
+    font-weight: normal;
+    font-size: 1.5em;
+    width: 100%;
+    margin-top: 0;
+}
+
+@media (max-width: 768px) {
+    h1 {
+        width: 100%;
+    }
+}
+
+h1 a {
+    color: rgb(var(--text-color-rgb));
+    text-decoration: none;
+    transition: color 0.5s ease, text-decoration-color 0.5s ease;
+}
+
+/* только наведение на конкретную ссылку */
+h1 a:hover {
+    color: rgba(var(--text-color-rgb), 0.5);
+    transition: color 0s ease, text-decoration-color 0s ease;
+}
+
+/* 1. При наведении на саму ссылку */
+h1 a:hover {
+    color: rgba(var(--text-color-rgb), 0.5);
+    transition: color 0s ease, text-decoration-color 0s ease;
+}
+
+h1 a:hover .arrow {
+    color: rgba(var(--hover-color-rgb), 1);
+    transition: color 0s ease;
+}
+
+/* 2. При наведении на картинку (figure), 
+   меняем цвет у ссылки в h1, который идет сразу после этой картинки */
+figure:hover + h1 a {
+    color: rgba(var(--text-color-rgb), 0.5);
+    transition: color 0s ease, text-decoration-color 0s ease;
+}
+
+figure:hover + h1 a .arrow {
+    color: rgba(var(--hover-color-rgb), 1);
+    transition: color 0s ease;
+}
+
+.arrow {
+    font-family: "Inter", sans-serif;
+    color: rgba(var(--link-color-rgb), 1);
+    transition: color 0.5s ease;
+    text-decoration: none; /* Убираем подчеркивание */
+}
+
+/* стрелка внутри конкретной ссылки при наведении на неё */
+h1 a:hover .arrow {
+    color: rgba(var(--hover-color-rgb), 1);
+    transition: color 0s ease;
+}
+
+a {
+    color: rgba(var(--link-color-rgb), 1);
+    text-decoration: underline;
+    text-decoration-thickness: 2px;
+    text-underline-offset: 0.15em;
+    text-decoration-color: rgba(var(--link-color-rgb), 0.3);
+    transition: color 0.5s ease, text-decoration-color 0.5s ease;
+}
+
+a:hover {
+    color: rgba(var(--hover-color-rgb), 1);
+    text-decoration-color: rgba(var(--hover-color-rgb), 0.3);
+    transition: color 0s ease, text-decoration-color 0s ease;
+}
+
+.accent {
+    color: rgba(var(--hover-color-rgb), 1);
+}
+
+
+/* Вертикальные отсупы */
+.vertical-space.S {
+    height: 1em;
+
+    @media (max-width: 768px) {
+        height: 0.6em;
+    }
+}
+
+.vertical-space.M {
+    height: 2em;
+
+    @media (max-width: 768px) {
+        height: 1.5em;
+    }
+}
+
+
+.vertical-space.L {
+    height: 4em;
+
+    @media (max-width: 768px) {
+        height: 3.5em;
+    }  
+}
+
+.vertical-space.XL {
+    height: 8em;
+
+    @media (max-width: 768px) {
+        height: 7.5em;
+    }  
+}
+
+#container {
+    position: relative;
+    width: 40%;          /* как у портрета */
+    margin: 0 auto;      /* центрируем контейнер */
+
+    @media (max-width: 768px) {
+        width: 50%;          /* как у портрета */
+    }
+}
+
+.portrait {
+    display: block;
+    width: 100%;         /* портрет заполняет контейнер */
+}
+
+.eye {
+    position: absolute;
+    width: 6%;   /* подберите значение */
+    transform-origin: center;
+    z-index: 10;
+}
+
+img {
+    display:block;
+    max-width: 100%;
+    height: auto;
+}
+
+figure {
+    margin: 0em;
+    margin-bottom: 0.5em;
+}
+
+figure figcaption {
+    font-size: 0.7em;
+    margin-top: 0.8em;
+    margin-bottom: 0;
+    opacity: 0.5;
+}
+
+
+figure.tall {
+    aspect-ratio: 1 / 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    /* overflow: hidden;  — УБРАТЬ */
+}
+
+figure.tall a {
+    display: block;
+    height: 100%;
+}
+
+figure.tall img {
+    height: 100%;
+    width: auto;
+    max-width: none;
+    display: block;
+    margin: 0;
+    filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.15));
+}
+
+/* Обёртка: картинка по центру, подпись поверх справа */
+.tall-with-caption {
+    position: relative;
+    /* padding-right: ... — УБРАТЬ  */
+}
+
+.tall-with-caption figure.tall {
+    margin-bottom: 0;
+}
+
+/* Подпись прижата к правому краю wrapper'а,
+   растёт столбцами влево (в сторону центра),
+   может накладываться на фотографию */
+.side-caption {
+    position: absolute;
+    right: 0;              /* правый край = правый край wrapper'а */
+    top: 0;                /* ↓ высота = высоте фото, */
+    bottom: 0;             /*   чтобы был корректный перенос */
+    margin: 0;
+    width: auto;
+    writing-mode: vertical-rl;
+    transform: rotate(180deg);
+    /* white-space: nowrap — уже убрано ранее, оставляем как есть */
+}
+
+.side-caption .arrow {
+    display: inline-block;
+    transform: rotate(90deg);
+}
+
+.shadow {
+    filter: drop-shadow(0 2px 12px rgba(0, 0, 0, 0.15));
+}
+
+.long-caption {
+    font-size: 0.7em;
+    opacity: 0.5;
+    margin-top: 0;
+    margin-bottom: 0;
+
+    @media (max-width: 768px) {
+        font-size: 0.7em;
+    }
+
+}
+
+/* ===== Эффект уменьшения картинки при наведении ===== */
+
+/* Добавляем плавность ТОЛЬКО для картинок, обернутых в ссылку */
+figure a img {
+    transition: transform 0.4s cubic-bezier(0.25, 0.46, 0.45, 0.94);
+}
+
+/* 1. Уменьшаем картинку, если навести мышку на ссылку-картинку */
+figure a:hover img {
+    transform: scale(0.98); 
+}
+
+/* 2. Уменьшаем картинку, если навести мышку на ссылку в тексте (h1) рядом с ней */
+.wrapper:has(h1 a:hover) figure a img {
+    transform: scale(0.98);
+}
+
+
+/* ===== Темная тема для отдельных страниц ===== */
+body.dark-theme {
+    /* Меняем фон на черный (можно использовать 15, 15, 15 для мягкого черного) */
+    --background-color-rgb: 0, 0, 0; 
+    
+    /* Меняем основной текст на белый */
+    --text-color-rgb: 255, 255, 255;
+
+    /* Опционально: делаем зеленый цвет ссылок чуть светлее, 
+       чтобы он лучше читался на черном фоне */
+    --link-color-rgb: 50, 200, 120; 
+}
+
+/* ===== Серая тема для отдельных страниц ===== */
+body.grey-theme {
+    /* Меняем фон на черный (можно использовать 15, 15, 15 для мягкого черного) */
+    --background-color-rgb: 209, 209, 209; 
+}
+
+.image-sequence {
+    display: flex;
+
+    & figure {
+        margin-right: 1%;
+    }
+}
+
+@media (max-width: 768px) {
+    .image-sequence {
+        flex-direction: column;
+        
+        & figure {
+            margin-right: 0;
+            margin-bottom: 0.5em;
+        }
+    }
+}
+
+/* ===== Деликатный scroll-reveal для картинок на главной ===== */
+body.page-home figure {
+    transform: scale(var(--scroll-scale, 1));
+    transform-origin: 50% 50%;
+    backface-visibility: hidden;
+    -webkit-backface-visibility: hidden;
+    will-change: transform;
+}
