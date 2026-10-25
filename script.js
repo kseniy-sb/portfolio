@@ -77,24 +77,34 @@ document.addEventListener("DOMContentLoaded", () => {
 });
 
 
-// === Деликатный scroll-reveal для картинок на главной ===
+// === Деликатный scroll-reveal для картинок и заголовков на главной ===
 document.addEventListener("DOMContentLoaded", () => {
   if (!document.body.classList.contains('page-home')) return;
   if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
 
-  const figures = Array.from(document.querySelectorAll('figure'));
-  if (!figures.length) return;
+  // Группируем: figure + следующий за ним h1 (в т.ч. .side-caption)
+  const groups = [];
+  document.querySelectorAll('figure').forEach(fig => {
+    const els = [fig];
+    const next = fig.nextElementSibling;
+    if (next && next.tagName === 'H1') els.push(next);
+    groups.push({ anchor: fig, els });
+  });
+  if (!groups.length) return;
 
-  const INITIAL_SCALE = 0.93; // 0.96 — если хочется ещё деликатнее
-  const RANGE_FACTOR  = 0.5;  // «длина» анимации в долях высоты вьюпорта
+  const groupByAnchor = new Map();
+  groups.forEach(g => groupByAnchor.set(g.anchor, g));
+
+  const INITIAL_SCALE = 0.93;
+  const RANGE_FACTOR  = 0.5;
 
   const active = new Set();
 
   const clamp01    = v => v < 0 ? 0 : v > 1 ? 1 : v;
   const smoothstep = t => t * t * (3 - 2 * t);
 
-  const setScale = (el, scale) => {
-    el.style.setProperty('--scroll-scale', scale);
+  const setScale = (els, scale) => {
+    els.forEach(el => el.style.setProperty('--scroll-scale', scale));
   };
 
   function update() {
@@ -102,16 +112,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const vCenter = vh / 2;
     const range   = vh * RANGE_FACTOR;
 
-    active.forEach(el => {
-      const rect     = el.getBoundingClientRect();
+    active.forEach(anchor => {
+      const g = groupByAnchor.get(anchor);
+      if (!g) return;
+
+      // p считаем ТОЛЬКО по картинке — единое значение для всей группы
+      const rect     = anchor.getBoundingClientRect();
       const elCenter = rect.top + rect.height / 2;
       const delta    = elCenter - vCenter;
 
-      // 1 — центр картинки совпадает с центром экрана,
-      // 0 — картинка далеко вверх ИЛИ вниз (симметрично)
       const p = smoothstep(clamp01(1 - Math.abs(delta) / range));
-
-      setScale(el, INITIAL_SCALE + (1 - INITIAL_SCALE) * p);
+      setScale(g.els, INITIAL_SCALE + (1 - INITIAL_SCALE) * p);
     });
   }
 
@@ -133,9 +144,9 @@ document.addEventListener("DOMContentLoaded", () => {
     scheduleUpdate();
   }, { rootMargin: '20% 0px 20% 0px' });
 
-  figures.forEach(f => {
-    setScale(f, INITIAL_SCALE);
-    io.observe(f);
+  groups.forEach(g => {
+    setScale(g.els, INITIAL_SCALE);
+    io.observe(g.anchor);
   });
 
   window.addEventListener('scroll', scheduleUpdate, { passive: true });
